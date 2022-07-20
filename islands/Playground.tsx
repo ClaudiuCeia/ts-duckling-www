@@ -1,9 +1,8 @@
 /** @jsx h */
 import { h } from "preact";
 import { tw } from "@twind";
-import { Duckling } from "https://deno.land/x/duckling@v0.0.2/mod.ts";
+import { AnyEntity, Duckling } from "https://deno.land/x/duckling@v0.0.2/mod.ts";
 import { useState } from "preact/hooks";
-import { AnyEntity } from "../../ts-duckling/mod.ts";
 
 interface PlaygroundProps {
   _a?: string;
