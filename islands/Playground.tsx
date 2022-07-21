@@ -4,7 +4,7 @@ import { tw } from "@twind";
 import {
   AnyEntity,
   Duckling,
-} from "https://deno.land/x/duckling@v0.0.2/mod.ts";
+} from "https://deno.land/x/duckling@v0.0.3/mod.ts";
 import { useEffect, useRef, useState } from "preact/hooks";
 import { Samples } from "../lib/Samples.ts";
 
