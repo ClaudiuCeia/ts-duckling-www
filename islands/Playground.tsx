@@ -4,6 +4,12 @@ import { tw } from "@twind";
 import {
   AnyEntity,
   Duckling,
+  Email,
+  Institution,
+  Quantity,
+  Temperature,
+  Time,
+  Range,
 } from "https://deno.land/x/duckling@v0.0.4/mod.ts";
 import { useEffect, useRef, useState } from "preact/hooks";
 import { Samples } from "../lib/Samples.ts";
@@ -49,7 +55,14 @@ export default function Playground(props: PlaygroundProps) {
 
   useEffect(() => {
     const n = performance.now();
-    const res = Duckling().extract({ text: value, index: 0 });
+    const res = Duckling([
+      Range.parser,
+      Temperature.parser,
+      Time.parser,
+      Quantity.parser,
+      Email.parser,
+      Institution.parser,
+    ]).extract({ text: value, index: 0 });
     setParseTime(performance.now() - n);
     res.success && setEntities(res.value.filter((e) => !!e) as AnyEntity[]);
   }, [value]);
