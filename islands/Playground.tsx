@@ -49,7 +49,7 @@ export default function Playground(props: PlaygroundProps) {
 
   useEffect(() => {
     const n = performance.now();
-    const res = Duckling.extract({ text: value, index: 0 });
+    const res = Duckling().extract({ text: value, index: 0 });
     setParseTime(performance.now() - n);
     res.success && setEntities(res.value.filter((e) => !!e) as AnyEntity[]);
   }, [value]);
