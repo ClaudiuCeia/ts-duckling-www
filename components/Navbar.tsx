@@ -28,6 +28,8 @@ export default function Navbar() {
             <a
               type="button"
               class={tw`bg-gray-800 p-2 px-5 rounded-full text-gray-400 hover:text-white text-3xl`}
+              href="https://github.com/ClaudiuCeia/ts-duckling"
+              target="_blank"
             >
               <i class={tw`fa-brands fa-github pr-3`}></i>
             </a>
