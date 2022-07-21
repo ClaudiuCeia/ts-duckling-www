@@ -1,7 +1,10 @@
 /** @jsx h */
 import { h } from "preact";
 import { tw } from "@twind";
-import { AnyEntity, Duckling } from "https://deno.land/x/duckling@v0.0.2/mod.ts";
+import {
+  AnyEntity,
+  Duckling,
+} from "https://deno.land/x/duckling@v0.0.2/mod.ts";
 import { useState } from "preact/hooks";
 
 interface PlaygroundProps {
@@ -47,7 +50,15 @@ export default function Playground(props: PlaygroundProps) {
 
   const showEntity = (part: AnyEntity) => {
     return () => {
-      setSelectedEntity(part);
+      if (
+        selectedEntity &&
+        selectedEntity.start === part.start &&
+        selectedEntity.end === part.end
+      ) {
+        setSelectedEntity(undefined);
+      } else {
+        setSelectedEntity(part);
+      }
     };
   };
 
@@ -56,19 +67,30 @@ export default function Playground(props: PlaygroundProps) {
       <div class={tw`grid grid-cols-2 gap-4 mt-10`}>
         <textarea
           onInput={extractEntities}
-          class={tw`w-full h-52 rounded-lg p-6 border(gray-300 1)`}
+          class={tw`w-full h-52 rounded-lg p-6 border(gray-700 1) bg(gray-900) placeholder(italic text-slate-400)`}
+          placeholder="Type in the text you want to parse."
         ></textarea>
 
-        <div class={tw`w-full h-52 rounded-lg p-6 shadow-lg`}>
+        <div
+          class={tw`w-full max-h-52 rounded-lg p-6 shadow-0 border(gray-700 1) overflow-auto`}
+        >
           {displayEntities().map((part, idx) => {
             if (typeof part === "string") {
               return <span>{part}</span>;
             }
 
+            const bg =
+              selectedEntity &&
+              selectedEntity.start === part.start &&
+              selectedEntity.end === part.end
+                ? `bg-red-600`
+                : `bg-blue-300`;
+
             return (
               <span
-                class={tw`bg-blue-700 px-1 py rounded font-bold text-white`}
+                class={tw`${bg} px-1 py rounded font-bold text-black cursor-pointer`}
                 onClick={showEntity(part)}
+                title={JSON.stringify(part.value)}
               >
                 {part.text}
               </span>
@@ -77,13 +99,16 @@ export default function Playground(props: PlaygroundProps) {
         </div>
       </div>
 
-      <div
-        class={tw`h-72 overflow-auto p-6 border(gray-300 1) mt-10 rounded-lg`}
-      >
-        <pre>
-          {selectedEntity && JSON.stringify(selectedEntity, undefined, 2)}
-        </pre>
-      </div>
+      {selectedEntity && (
+        <div
+          autoFocus={true}
+          tabIndex={0}
+          onBlur={() => setSelectedEntity(undefined)}
+          class={tw`max-h-72 overflow-auto p-6 border(gray-300 1) mt-10 rounded-lg`}
+        >
+          <pre>{JSON.stringify(selectedEntity, undefined, 2)}</pre>
+        </div>
+      )}
     </div>
   );
 }
