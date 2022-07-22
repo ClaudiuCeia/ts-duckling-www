@@ -4,6 +4,12 @@ import { tw } from "@twind";
 import {
   AnyEntity,
   Duckling,
+  Email,
+  Institution,
+  Quantity,
+  Temperature,
+  Time,
+  Range,
 } from "https://deno.land/x/duckling@v0.0.4/mod.ts";
 import { useEffect, useRef, useState } from "preact/hooks";
 import { Samples } from "../lib/Samples.ts";
@@ -14,7 +20,7 @@ interface PlaygroundProps {
 
 export default function Playground(props: PlaygroundProps) {
   const [value, setValue] = useState("");
-  const [entities, setEntities] = useState<AnyEntity[]>([]);
+  const [entities, setEntities] = useState<(string | AnyEntity)[]>([]);
   const [selectedEntity, setSelectedEntity] = useState<AnyEntity>();
   const [parseTime, setParseTime] = useState<number>();
 
@@ -48,10 +54,12 @@ export default function Playground(props: PlaygroundProps) {
   };
 
   useEffect(() => {
-    const n = performance.now();
-    const res = Duckling().extract({ text: value, index: 0 });
-    setParseTime(performance.now() - n);
-    res.success && setEntities(res.value.filter((e) => !!e) as AnyEntity[]);
+    (async () => {
+      const then = performance.now();
+      const res = await fetch(`/api/extract?q=${value}`);
+      setEntities(await res.json());
+      setParseTime(performance.now() - then);
+    })();
   }, [value]);
 
   const onTextareaClick = (ev: Event) => {
@@ -61,26 +69,6 @@ export default function Playground(props: PlaygroundProps) {
     }
 
     setValue(target.value);
-  };
-
-  const displayEntities = () => {
-    if (entities.length === 0) {
-      return [value];
-    }
-
-    const stitched: (string | AnyEntity)[] = [
-      value.substring(0, entities[0]?.start),
-    ];
-    for (const [idx, entity] of entities.entries()) {
-      const nextEntity = entities[idx + 1];
-      const followingText = nextEntity
-        ? value.substring(entity.end, nextEntity.start)
-        : value.substring(entity.end);
-
-      stitched.push(entity, followingText);
-    }
-
-    return stitched;
   };
 
   const showEntity = (part: AnyEntity) => {
@@ -136,7 +124,7 @@ export default function Playground(props: PlaygroundProps) {
           onScroll={handleScrollSecond}
           ref={secondDivRef}
         >
-          {displayEntities().map((part, idx) => {
+          {entities.map((part, idx) => {
             if (typeof part === "string") {
               return <span>{part}</span>;
             }
