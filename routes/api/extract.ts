@@ -10,7 +10,7 @@ import {
   URL as URLRecognizer,
   Location,
   AnyEntity,
-} from "duckling";
+} from "duckling/mod.ts";
 
 export const handler: Handlers = {
   GET(req) {

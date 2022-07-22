@@ -1,16 +1,7 @@
 /** @jsx h */
 import { h } from "preact";
 import { tw } from "@twind";
-import {
-  AnyEntity,
-  Duckling,
-  Email,
-  Institution,
-  Quantity,
-  Temperature,
-  Time,
-  Range,
-} from "duckling";
+import { AnyEntity } from "duckling/mod.ts";
 import { useEffect, useRef, useState } from "preact/hooks";
 import { Samples } from "../lib/Samples.ts";
 
