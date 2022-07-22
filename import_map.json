@@ -7,7 +7,7 @@
     "@twind": "./utils/twind.ts",
     "twind": "https://esm.sh/twind@0.16.17",
     "twind/": "https://esm.sh/twind@0.16.17/",
-    "duckling/": "https://deno.land/x/duckling@v0.0.8/",  
+    "duckling/": "https://deno.land/x/duckling@v0.0.9/",  
     "combine/": "https://deno.land/x/combine@v0.0.9/"
   }
 }

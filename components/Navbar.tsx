@@ -18,7 +18,7 @@ export default function Navbar() {
                 src="/logo.svg"
                 alt="ts-duckling"
               />
-              <h1 class={tw`text-white px-3 py-2`}>ts-duckling v0.0.8</h1>
+              <h1 class={tw`text-white px-3 py-2`}>ts-duckling v0.0.9</h1>
             </div>
           </div>
 
