@@ -10,7 +10,7 @@ import {
   Temperature,
   Time,
   Range,
-} from "https://deno.land/x/duckling@v0.0.4/mod.ts";
+} from "duckling";
 import { useEffect, useRef, useState } from "preact/hooks";
 import { Samples } from "../lib/Samples.ts";
 

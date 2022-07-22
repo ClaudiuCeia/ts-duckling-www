@@ -10,7 +10,7 @@ import {
   URL as URLRecognizer,
   Location,
   AnyEntity,
-} from "https://deno.land/x/duckling@v0.0.4/mod.ts";
+} from "duckling";
 
 export const handler: Handlers = {
   GET(req) {
